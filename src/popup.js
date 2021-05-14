@@ -2,17 +2,26 @@ import browser from 'webextension-polyfill'
 const container = document.querySelector('.container');
 const result = document.querySelector('#resultado');
 const form= document.querySelector('#formulario');
-console.log(container)
+
 window.addEventListener('load', () => {
     form.addEventListener('submit', searchWeather);
 })
+let data = {
+    valid: true,
+    city: '',
+    country: ''
+}
 
 function searchWeather(e) {
     e.preventDefault();
     //validating
     const city = document.querySelector('#ciudad').value;
     const country = document.querySelector('#pais').value;
+    data.city = city;
+    data.country = country;
+    notifyBackgroundPage(data);
 
+    // console.log('esto es data', data);
     if(city === '' || country === '' ){
         showError('Ambos campos son obligatorios!');
     }
@@ -39,3 +48,18 @@ function showError(message){
     
     
 }
+
+const handleResponse = (message) => {
+    console.log('estoy en el popup', message);
+}
+
+const handleError = (error) => {
+    console.log(`Error: ${error}`);
+}
+  
+const notifyBackgroundPage = (data) => {
+    console.log('data linea 61',data)
+    let sending = browser.runtime.sendMessage(data);
+    sending.then(handleResponse, handleError);
+}
+
