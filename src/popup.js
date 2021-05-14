@@ -49,8 +49,37 @@ function showError(message){
     
 }
 
+function showWeather(data) {
+    clearHtml();
+    const { main: {temp, temp_max, temp_min} } = data;
+    const centigrade = kelvinToCentigrade(temp);
+
+    const act = document.createElement('p');
+    act.innerHTML = `${centigrade} &#8451`;
+    act.classList.add('fw-bold', 'fs-1', 'text-center','text-white');
+
+    const resultDiv = document.createElement('div');
+    resultDiv.classList.add('text-center');
+    result.appendChild(act);
+    result.appendChild(resultDiv);
+}
+
+const kelvinToCentigrade = grades => parseInt(grades - 273.15);
+
+function clearHtml(){
+    while (result.firstChild) {
+        result.removeChild(result.firstChild);
+      }
+}
+
 const handleResponse = (message) => {
     console.log('estoy en el popup', message);
+   
+    if(message.cod == '404'){
+        showError('Ciudad no encontrada, intente con otra')
+        return;
+    }
+    showWeather(message);
 }
 
 const handleError = (error) => {
