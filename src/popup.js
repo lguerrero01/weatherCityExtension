@@ -28,6 +28,7 @@ function searchWeather(e) {
 }
 
 function showError(message){
+    clearHtml();
     console.log(message)
     const alerta = document.querySelector('.alert-danger');
 
@@ -51,17 +52,36 @@ function showError(message){
 
 function showWeather(data) {
     clearHtml();
-    const { main: {temp, temp_max, temp_min} } = data;
+    const { name , main: {temp, temp_max, temp_min} } = data;
     const centigrade = kelvinToCentigrade(temp);
+    const max = kelvinToCentigrade(temp_max);
+    const min = kelvinToCentigrade(temp_min);
+
+    const nameCity = document.createElement('p');
+    nameCity.innerHTML = `Clima en: ${name}`;
+    nameCity.classList.add('fw-bold', 'fs-1')
 
     const act = document.createElement('p');
     act.innerHTML = `${centigrade} &#8451`;
-    act.classList.add('fw-bold', 'fs-1', 'text-center','text-white');
+    act.classList.add('fw-bold', 'fs-1', 'text-center','text-white','bg-dark', 'badge', 'row', 'd-block');
+
+    const tempMax = document.createElement('p');
+    tempMax.innerHTML = `Temp Maxima: ${max}&#8451`;
+    tempMax.classList.add('badge', 'bg-danger','text-white', 'fs-6', 'row', 'd-block');
+
+    const tempMin = document.createElement('p');
+    tempMin.innerHTML = `Temp Minima: ${min}&#8451`;
+    tempMin.classList.add('badge', 'bg-primary','text-white','fs-6','row', 'd-block');
 
     const resultDiv = document.createElement('div');
-    resultDiv.classList.add('text-center');
-    result.appendChild(act);
+    resultDiv.classList.add('text-center', 'container');
+    resultDiv.appendChild(nameCity);
+    resultDiv.appendChild(act);
+    resultDiv.appendChild(tempMax);
+    resultDiv.appendChild(tempMin);
+    
     result.appendChild(resultDiv);
+    
 }
 
 const kelvinToCentigrade = grades => parseInt(grades - 273.15);
