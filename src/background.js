@@ -2,6 +2,7 @@ import browser from 'webextension-polyfill'
 
 let city = '';
 let country = '';
+
 browser.runtime.onInstalled.addListener(function () {
   let url = `http://api.ipstack.com/check?access_key=46d55efd82cf8067ed7c334ec534bb52`;
   fetch(url) 

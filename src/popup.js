@@ -143,7 +143,7 @@ const changeText = (location, string) => {
 function showActualWeather() {
     const storage = browser.storage.local.get()
     storage.then(data => {
-        if (data) {
+        if (data.city) {
         yourCity.classList.remove('invisible')
         console.log('esta data del storage',data)
         changeText(city, data.city)
