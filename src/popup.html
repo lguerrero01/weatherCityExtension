@@ -2,11 +2,67 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Popup</title>
+  <title>WeatherCityExtension</title>
   <link rel="stylesheet" href="popup.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
   <script src="popup.js"></script>
 </head>
 <body>
+  <div class="container mx-auto ">
+    <div class="row justify-content-center mt-4 alig-items-center">
+      <lottie-player class="col-6 p-0" src="https://assets2.lottiefiles.com/private_files/lf30_krjvRk.json"  background="transparent"  speed="1"  style="width: 100px; height: 70px;"  loop  autoplay></lottie-player>
+      <h1 id="titulo" class="col-6 mt-4 ml-0 p-0 text-white fw-bold text-uppercase text-center">Busca el Clima</h1>
+    </div>
+    
 
+    <div class="m-3 row justify-content-center alig-items-center">
+      <div class="p-6 mt-10 col-auto">
+          <div id="resultado">
+              <p class="text-center text-black mt-6 fw-bold">Agrega tu ciudad y país, el resultado se mostrará aquí</p>
+          </div>
+      </div>
+     
+      <form id="formulario" class="mt-10 row" action="#" method="POST">
+          <div class="input-group mb-3 mt-5">
+            <span class="input-group-text" id="inputGroup-sizing-default">Escribe tu Ciudad</span>
+            <input 
+              name="ciudad"
+              id="ciudad"
+              type="text" 
+              class="form-control p-2 rounded" 
+              aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-default"
+              >
+          </div>
+         
+          <div class="mt-2">
+            <select 
+              id="pais" 
+              class="form-select bg-gray-200 border border-gray text-gray-700 py-3 px-4 pr-8 rounded" 
+              aria-label="Default select example">
+              <option disabled selected value="">-- Seleccione pais --</option>
+                  <option value="VE">Venezuela</option>
+                  <option value="AR">Argentina</option>
+                  <option value="CO">Colombia</option>
+                  <option value="CR">Costa Rica</option>
+                  <option value="ES">España</option>
+                  <option value="US">Estados Unidos</option>
+                  <option value="MX">México</option>
+                  <option value="PE">Perú</option>
+            </select>
+
+            <div class="row">
+              <button type="submit" class="col btn btn-warning m-3 fw-bold" value="Obtener Clima">Obtener Clima</button>
+            </div>
+          </div>
+         
+          
+
+      </form>
+
+
+  </div>
+  </div>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 </html>
