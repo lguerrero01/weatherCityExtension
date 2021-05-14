@@ -1,16 +1,22 @@
 import browser from 'webextension-polyfill'
 const container = document.querySelector('.container');
 const result = document.querySelector('#resultado');
-const form= document.querySelector('#formulario');
+const form = document.querySelector('#formulario');
 
-window.addEventListener('load', () => {
-    form.addEventListener('submit', searchWeather);
-})
+let city = document.getElementById('city')
+let weather = document.getElementById('weather')
+let temperature = document.getElementById('temperature')
+const yourCity = document.querySelector('#yourCity')
+
 let data = {
     valid: true,
     city: '',
     country: ''
 }
+window.addEventListener('load', () => {
+    form.addEventListener('submit', searchWeather);
+})
+
 
 function searchWeather(e) {
     e.preventDefault();
@@ -27,9 +33,9 @@ function searchWeather(e) {
     }
 }
 
-function showError(message){
+function showError(message) {
     clearHtml();
-    console.log(message)
+
     const alerta = document.querySelector('.alert-danger');
 
     if(!alerta){//if there are no alerts then
@@ -52,18 +58,18 @@ function showError(message){
 
 function showWeather(data) {
     clearHtml();
-    const { name , main: {temp, temp_max, temp_min} } = data;
+    const { sys: {country} , name , main: {temp, temp_max, temp_min} } = data;
     const centigrade = kelvinToCentigrade(temp);
     const max = kelvinToCentigrade(temp_max);
     const min = kelvinToCentigrade(temp_min);
 
     const nameCity = document.createElement('p');
-    nameCity.innerHTML = `Clima en: ${name}`;
-    nameCity.classList.add('fw-bold', 'fs-1')
+    nameCity.innerHTML = `Clima en: ${name} ${country}`;
+    nameCity.classList.add('fw-bold', 'fs-3')
 
     const act = document.createElement('p');
-    act.innerHTML = `${centigrade} &#8451`;
-    act.classList.add('fw-bold', 'fs-1', 'text-center','text-white','bg-dark', 'badge', 'row', 'd-block');
+    act.innerHTML = `${centigrade}&#8451`;
+    act.classList.add('fw-bold', 'fs-1', 'text-center','text-white', 'row', 'd-block');
 
     const tempMax = document.createElement('p');
     tempMax.innerHTML = `Temp Maxima: ${max}&#8451`;
@@ -86,7 +92,7 @@ function showWeather(data) {
 
 const kelvinToCentigrade = grades => parseInt(grades - 273.15);
 
-function clearHtml(){
+function clearHtml() {
     while (result.firstChild) {
         result.removeChild(result.firstChild);
       }
@@ -108,7 +114,44 @@ const handleError = (error) => {
   
 const notifyBackgroundPage = (data) => {
     console.log('data linea 61',data)
+    spinner();
     let sending = browser.runtime.sendMessage(data);
     sending.then(handleResponse, handleError);
 }
 
+function spinner() {
+    clearHtml();
+    const divSpinner = document.createElement('div');
+    divSpinner.classList.add('sk-chase','row','fs-1');
+    divSpinner.innerHTML=`
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    <div class="sk-chase-dot"></div>
+    `;
+    result.classList.add('container')
+    result.appendChild(divSpinner);
+}
+
+const changeText = (location, string) => {
+    location.innerHTML = `${string}`
+}
+
+
+function showActualWeather() {
+    const storage = browser.storage.local.get()
+    storage.then(data => {
+        if (data) {
+        yourCity.classList.remove('invisible')
+        console.log('esta data del storage',data)
+        changeText(city, data.city)
+        changeText(weather, data.weather)
+        changeText(temperature, `${Number.parseInt(data.temperature)}°`)
+        }
+        
+    })  
+
+}
+showActualWeather()
