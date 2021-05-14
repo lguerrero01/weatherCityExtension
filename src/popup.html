@@ -5,7 +5,7 @@
   <title>WeatherCityExtension</title>
   <link rel="stylesheet" href="popup.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <script src="popup.js"></script>
+  
 </head>
 <body>
   <div class="container mx-auto ">
@@ -38,7 +38,7 @@
           <div class="mt-2">
             <select 
               id="pais" 
-              class="form-select bg-gray-200 border border-gray text-gray-700 py-3 px-4 pr-8 rounded" 
+              class="form-select bg-gray-200 border border-gray text-gray-700 py-2 px-4 pr-8 rounded" 
               aria-label="Default select example">
               <option disabled selected value="">-- Seleccione pais --</option>
                   <option value="VE">Venezuela</option>
@@ -51,18 +51,14 @@
                   <option value="PE">Perú</option>
             </select>
 
-            <div class="row">
-              <button type="submit" class="col btn btn-warning m-3 fw-bold" value="Obtener Clima">Obtener Clima</button>
+            <div class="row ">
+              <button type="submit" class="col btn btn-warning m-3 fw-bold " value="Obtener Clima">Obtener Clima</button>
             </div>
-          </div>
-         
-          
-
+          </div>     
       </form>
-
-
+   </div>
   </div>
-  </div>
+  <script src="popup.js"></script>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </body>
 </html>
